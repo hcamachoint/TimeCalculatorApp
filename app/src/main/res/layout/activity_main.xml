@@ -13,13 +13,30 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/textResult"
-            android:layout_width="match_parent"
+
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Hours: 0.00"
-            android:textSize="40sp"
-            android:textStyle="bold"/>
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hours: "
+                android:textSize="40sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textSize="40sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -134,6 +151,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/btnCalculate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -141,17 +159,17 @@
             android:text="CALCULATE"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:onClick="onCalculate"
             />
 
         <Button
+            android:id="@+id/btnClear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@android:color/darker_gray"
-            android:onClick="onClear"
             android:text="CLEAR"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            />
     </LinearLayout>
 </ScrollView>

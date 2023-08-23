@@ -1,44 +1,49 @@
-package com.webkingve.timecalculator
+package com.webkingve.timecalculatorapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     private var textResult : TextView? = null
-    private var timeOne : TextView? = null
-    private var timeTwo : TextView? = null
-    private var timeThree : TextView? = null
-    private var timeFour : TextView? = null
-    private var timeFive : TextView? = null
-    private var timeSix : TextView? = null
-    private var timeSeven : TextView? = null
     var totalizer : Double = 0.00
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        textResult = findViewById(R.id.textResult)
-        timeOne = findViewById(R.id.timeOne)
-        timeTwo = findViewById(R.id.timeTwo)
-        timeThree = findViewById(R.id.timeThree)
-        timeFour = findViewById(R.id.timeFour)
-        timeFive = findViewById(R.id.timeFive)
-        timeSix = findViewById(R.id.timeSix)
-        timeSeven = findViewById(R.id.timeSeven)
+        val btnClear = findViewById<Button>(R.id.btnClear)
+        btnClear.setOnClickListener {
+            clear()
+        }
+
+        val btnCalculate = findViewById<Button>(R.id.btnCalculate)
+        btnCalculate.setOnClickListener {
+            calculate()
+        }
+    }
+
+    fun safeToInt(string: String): Int {
+        if (string.isNotBlank()) {
+            return string.toInt()
+        } else {
+            return 0
+        }
     }
 
     private fun timeCloser(value : Double){
-        totalizer += value                                                  //FLOAT
+        var filterValue: String? = "%.2f".format(value)
+        totalizer += filterValue!!.toDouble()                                                  //FLOAT
+        Log.i("App Error", totalizer.toString())
 
         var resultSimple = totalizer.toString().split(".")      //STRING
-        var resultOne = resultSimple[0].toInt()
-        var resultTwo = resultSimple[1].toInt()
+        var resultOne = safeToInt(resultSimple[0])
+        var resultTwo = safeToInt(resultSimple[1])
         var resultDecimal = ""
 
         if (resultTwo >= 60){
@@ -56,72 +61,54 @@ class MainActivity : AppCompatActivity() {
         }else{
             resultDecimal = resultTwo.toString()
         }
+        Log.i("App Error Debug", resultDecimal)
         totalizer = ("${resultOne}.$resultDecimal").toDouble()
-        textResult?.text = "Hours: $totalizer"
     }
 
-    fun onCalculate(view: View){
-        var tvOne = timeOne?.text
-        var tvTwo = timeTwo?.text
-        var tvThree = timeThree?.text
-        var tvFour = timeFour?.text
-        var tvFive = timeFive?.text
-        var tvSix = timeSix?.text
-        var tvSeven = timeSeven?.text
+    fun calculate(){
         totalizer = 0.00
+        var textResult = findViewById<TextView>(R.id.textResult)
+        var tvOne = findViewById<EditText>(R.id.timeOne).text
+        var tvTwo = findViewById<EditText>(R.id.timeTwo).text
+        var tvThree = findViewById<EditText>(R.id.timeThree).text
+        var tvFour = findViewById<EditText>(R.id.timeFour).text
+        var tvFive = findViewById<EditText>(R.id.timeFive).text
+        var tvSix = findViewById<EditText>(R.id.timeSix).text
+        var tvSeven = findViewById<EditText>(R.id.timeSeven).text
 
         try {
-            if (tvOne != null) {
-                if(tvOne.isNotEmpty()){
-                    timeCloser(tvOne.toString().toDouble())
-                }
+            if(tvOne.isNotEmpty()){
+                timeCloser(tvOne.toString().toDouble())
             }
-            if (tvTwo != null) {
-                if(tvTwo.isNotEmpty()){
-                    timeCloser(tvTwo.toString().toDouble())
-                }
+            if(tvTwo.isNotEmpty()){
+                timeCloser(tvTwo.toString().toDouble())
             }
-            if (tvThree != null) {
-                if(tvThree.isNotEmpty()){
-                    timeCloser(tvThree.toString().toDouble())
-                }
+            if(tvThree.isNotEmpty()){
+                timeCloser(tvThree.toString().toDouble())
             }
-            if (tvFour != null) {
-                if(tvFour.isNotEmpty()){
-                    timeCloser(tvFour.toString().toDouble())
-                }
+            if(tvFour.isNotEmpty()){
+                timeCloser(tvFour.toString().toDouble())
             }
-            if (tvFive != null) {
-                if(tvFive.isNotEmpty()){
-                    timeCloser(tvFive.toString().toDouble())
-                }
+            if(tvFive.isNotEmpty()){
+                timeCloser(tvFive.toString().toDouble())
             }
-            if (tvSix != null) {
-                if(tvSix.isNotEmpty()){
-                    timeCloser(tvSix.toString().toDouble())
-                }
+            if(tvSix.isNotEmpty()){
+                timeCloser(tvSix.toString().toDouble())
             }
-            if (tvSeven != null) {
-                if(tvSeven.isNotEmpty()){
-                    timeCloser(tvSeven.toString().toDouble())
-                }
+            if(tvSeven.isNotEmpty()){
+                timeCloser(tvSeven.toString().toDouble())
             }
+            textResult.text = totalizer.toString()
         }catch(e: Exception) {
-            Toast.makeText(this, "Algo ha fallado: $e", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Algo ha fallado", Toast.LENGTH_LONG).show()
+            Log.i("App Error", e.toString())
         }
     }
 
-    fun onClear(view : View){
+    private fun clear(){
         try {
-            timeOne?.text = ""
-            timeTwo?.text = ""
-            timeThree?.text = ""
-            timeFour?.text = ""
-            timeFive?.text = ""
-            timeSix?.text = ""
-            timeSeven?.text = ""
-            textResult?.text = "Hours: 0.00"
-            timeOne?.requestFocus()
+            //textResult?.text = "0.00"
+            //timeOne?.requestFocus()
         }catch (e: Exception){
             Toast.makeText(this, "Algo ha fallado", Toast.LENGTH_LONG).show()
             e.printStackTrace()
